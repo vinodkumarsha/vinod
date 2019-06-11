@@ -1,0 +1,17 @@
+.angular-logo {
+    margin: 0 4px 3px 0;
+    height: 35px;
+    vertical-align: middle;
+}
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.divHeader{text-align: right; margin-right: 2px;}
+
+.welcome{text-align: center; vertical-align: middle; margin-top: 15px}
+
+.btn-primary {
+  margin-right: 5px;
+  margin-top: -40px;
+}

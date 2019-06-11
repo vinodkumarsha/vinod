@@ -1,0 +1,133 @@
+<div class="col-lg-8">
+    <div class="panel panel-default">
+      <div class="panel-heading"><span class="lead">Registration </span></div>
+        <div class="container">
+        <div class="col-lg-7">
+        <form  #regForm="ngForm" (ngSubmit)="createuser();regForm.reset()">
+          <h4 style="color: green; font-family: Arial, Helvetica, sans-serif">
+            {{message}} 
+          </h4>
+          
+            <div class="form-group">
+            <label class="col-lg-2 control-label">Email</label>
+            <div class="col-lg-10">
+              <input class="form-control" type="text" id="email" name="email" [(ngModel)] = "email"
+               #myEmail="ngModel" required minlength="10" email >
+                <div *ngIf="myEmail.errors && (myEmail.dirty || myEmail.touched)" class="alert alert-danger">
+                  <div [hidden]="!myEmail.errors.required">
+                      Email is required
+                  </div>
+                  <div [hidden]="!myEmail.errors.minlength">
+                      Email must be at least 10 characters long.
+                  </div>
+                  <div [hidden]="!myEmail.errors?.email">
+                      Email not valid.
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label  class="col-lg-2 control-label">Password</label>
+          <div class="col-lg-10">
+            <input class="form-control" type="password" id="password" name="password" 
+              [(ngModel)] = "password" #myPassword="ngModel" required minlength="4"> 
+              <div *ngIf="myPassword.errors && (myPassword.dirty || myPassword.touched)" class="alert alert-danger">
+                <div [hidden]="!myPassword.errors.required">
+                  Password is required
+                </div>
+                <div [hidden]="!myPassword.errors.minlength">
+                    Password must be at least 4 characters long.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label  class="col-lg-2 control-label">First Name</label>
+            <div class="col-lg-10">
+              <input class="form-control" type="text" id="firstName" name="firstName" [(ngModel)] = "firstName"
+                  #myFirstName="ngModel" required minlength="5">
+                <div *ngIf="myFirstName.errors && (myFirstName.dirty || myFirstName.touched)" class="alert alert-danger">
+                  <div [hidden]="!myFirstName.errors.required">
+                      First Name is required
+                  </div>
+                   <div [hidden]="!myFirstName.errors.minlength">
+                      First Name must be at least 5 characters long.
+                 </div>
+                </div>
+              </div>
+          </div>
+          
+          <div class="form-group">
+              <label class="col-lg-2 control-label">Last Name</label>
+              <div class="col-lg-10">
+                <input class="form-control" type="text" id="lastName" name="lastName" [(ngModel)] = "lastName"
+                  #myLastName="ngModel" required minlength="3">
+                  <div *ngIf="myLastName.errors && (myLastName.dirty || myLastName.touched)" class="alert alert-danger">
+                    <div [hidden]="!myLastName.errors.required">
+                      Last Name is required
+                    </div>
+                    <div [hidden]="!myLastName.errors.minlength">
+                      First Name must be at least 3 characters long.
+                    </div>
+                  </div>
+              </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-lg-2 control-label">Gender</label>
+            <div class="col-lg-10">
+              <label *ngFor="let gen of gender; let indx = index"> 
+                <input  type="radio"  name="gender" [(ngModel)] = "selectedGender"
+                #mygender="ngModel" [value]="gen.id" required >
+                {{gen.description}}
+
+                <div *ngIf="mygender.errors && (mygender.dirty || mygender.touched)" class="alert alert-danger">
+                  <div [hidden]="!mygender.errors.required">
+                    Gender is required
+                  </div>
+                </div>
+              </label>
+            </div>
+        </div>
+
+        
+        <div class="form-group">
+          <label class="col-lg-2 control-label">City</label>
+          <div class="col-lg-10">
+              <select name="city" [(ngModel)]="selectedCity" required #myCity="ngModel"> 
+                <option [ngValue]="null" disabled>Select</option>
+                <option *ngFor="let cty of city" [ngValue]="cty"  > {{cty.description}}</option>
+              </select>
+               <!-- <div *ngIf="!myCity.invalid" class="alert alert-danger">
+                  <div [hidden]="myCity.errors.required">
+                    City is required
+                  </div>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="row"></div>
+
+          <div class="col-lg-10">
+            <div *ngIf="!userDetails">
+                  <button class="btn btn-success" type="submit" [disabled]="!regForm.form.valid">Create User</button>
+            </div>
+            <div *ngIf="userDetails">
+              <button class="btn btn-success" type="button" (click)="modify();"  [disabled]="!regForm.form.valid">Modify</button>
+            </div>
+          </div>
+          
+          <div class="row"></div>
+          
+          <div class="col-lg-10" >
+            <a *ngIf="!userDetails" style="margin-left:10px" routerLink="/login">Go to Login</a>
+          </div>
+</form> 
+</div>
+</div>
+</div>
+</div>
+

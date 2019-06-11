@@ -1,0 +1,61 @@
+
+<form #loginForm ="ngForm" (ngSubmit)="login();loginForm.reset()">
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><span class="lead">Login </span></div>
+        <div class="container">
+          <h4 style="color: red; font-family: Arial, Helvetica, sans-serif">
+            {{message}}
+          </h4>
+                       <div class="col-lg-5">
+                            <div  class="form-group">
+                                <label class="col-lg-2 control-label">Email</label>
+                              <div class="col-lg-10">
+                                <input class="form-control" type="text" id="email"  minlength="10" name="email" [(ngModel)] = "email" 
+                                    #myEmail="ngModel" email required >
+                                    <div *ngIf="myEmail.errors && (myEmail.dirty || myEmail.touched)" 
+                                      class="alert alert-danger">
+                                      <div [hidden]="!myEmail.errors.required">
+                                          Email is required
+                                      </div>
+                                      <div [hidden]="!myEmail.errors.minlength">
+                                          Email must be at least 10 characters long.
+                                      </div>
+                                      <div [hidden]="!myEmail.errors?.email">
+                                          Email not valid.
+                                      </div>
+                                    </div>
+                              </div>
+                            </div>
+                       
+                            <div  class="form-group">
+                                <label class="col-lg-2 control-label">Password</label>
+                              <div class="col-lg-10">
+                                <input class="form-control" type="password" id="password" name="password" 
+                                  [(ngModel)] = "password" required minlength="4" #myPassword="ngModel"> 
+                                <div *ngIf="myPassword.errors && (myPassword.dirty || myPassword.touched)" class="alert alert-danger">
+                                  <div [hidden]="!myPassword.errors.required">
+                                    Password is required
+                                  </div>
+                                  <div [hidden]="!myPassword.errors.minlength">
+                                    Password must be at least 4 characters long.
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <div class="col-lg-10">
+                                <button class="btn btn-success" type="submit" 
+                                  [disabled]="!loginForm.form.valid">Login</button> 
+                            </div>
+                            <div class="col-lg-10">
+                                <a routerLink="/register">Signup</a>       
+                            </div>
+                        </div>
+    </div>
+  </div>
+</div>
+</form> 
+
+

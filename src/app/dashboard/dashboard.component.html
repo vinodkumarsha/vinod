@@ -1,0 +1,62 @@
+<div class="col-lg-9">
+    <div class="panel panel-default" *ngIf="isLoggedIn$ | async; else elseTemplate">
+    <div class="panel-heading"><span class="lead">Dashboard </span></div>
+    <div class="tablecontainer" >
+      <table class="table table-striped table-bordered table-hover table-responsive table-row">
+        <thead>
+            <tr>
+              <th class="hidden">ID</th>
+              <th style="width: 10%">No</th>
+              <th style="width: 20%">FirstName</th>
+              <th style="width: 20%">LastName</th>
+              <th style="width: 50%">Email</th>
+            </tr>
+          </thead>
+         <tbody>
+            <tr *ngFor="let user of users; let i = index">
+              <td class="hidden">{{user.id}}</td>
+              <td >{{i+1}}</td>
+              <td >{{user.firstName}}</td>
+              <td >{{user.lastName}}</td>
+              <td >{{user.email}}</td>
+              <td ><a (click)="onSelect(user);" 
+                style="cursor: pointer;">View</a></td>
+            </tr>
+         </tbody>
+    
+     </table>
+    </div>
+    </div>
+    
+    <ng-template #elseTemplate>
+      <p>No Record found</p>
+    </ng-template>
+
+    <div *ngIf="selectedUser">
+        <div class="panel panel-default">
+          <div class="panel-heading"><span class="lead">Selected User </span></div>
+            <div class="tablecontainer">
+              <table class="table table-striped table-bordered table-hover table-responsive table-row">
+                <thead>
+                    <tr>
+                      <th class="hidden">ID</th>
+                      <th style="width: 10%">No</th>
+                      <th style="width: 20%">FirstName</th>
+                      <th style="width: 20%">LastName</th>
+                      <th style="width: 50%">Email</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                    <tr >
+                      <td class="hidden">{{selectedUser.id}}</td>
+                      <td >{{selectedUser.id}}</td>
+                      <td >{{selectedUser.firstName}}</td>
+                      <td >{{selectedUser.lastName}}</td>
+                      <td >{{selectedUser.email}}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>

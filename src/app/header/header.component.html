@@ -1,0 +1,15 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="background: #adc5f7; height: 90px;">
+  <span>
+    <img src="" class="angular-logo">
+    Angular
+  </span>
+  <span class="fill-remaining-space"></span>
+  <div *ngIf="isLoggedIn$ | async">
+    <div *ngFor="let usr of users" class="welcome">Welcome {{usr.firstName}}</div>
+    <div class="divHeader">
+      <button class="btn btn-primary" type="button" name="logout" value="Logout" (click)="logout();">Logout</button>
+    </div>
+  </div> 
+  <!-- <div><a [routerLink]="['user']">user</a></div> -->
+</div>

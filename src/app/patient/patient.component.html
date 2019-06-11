@@ -1,0 +1,417 @@
+
+<p-menubar [model]="menuitem" [autoDisplay]="false">
+  <input type="text" pInputText name="menuText" placeholder="Search">
+  <button pButton type="button" label="Search" icon="fa fa-sign-out" (click)="search()"></button>
+</p-menubar>
+
+<p-messages [(value)]="msgs"></p-messages>
+<p-growl [(value)]="msgs"></p-growl>
+
+<form #myform = "ngForm">
+  <div class="ui-g-12 ui-md-4">
+      <h4>Name</h4>
+      <div class="ui-inputgroup">
+        <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+        <input pInputText type="text" [(ngModel)]="pName" name="name" #name="ngModel" placeholder="Patient Name">
+      </div>
+  </div>
+
+  <div class="ui-g-12 ui-md-4">
+    <div class="first">Already member</div>
+    <div class="ui-g" style="width:250px; margin-bottom:10px">
+      <div class="ui-g-12">
+        <p-checkbox name="ckgroup"  id="ck1" value="1" [(ngModel)]="selectedNo"  label="Test"> </p-checkbox>
+      </div>
+      <div class="ui-g-12">
+        <p-checkbox name="ckgroup" id="ck2" value="2" [(ngModel)]="selectedNo"  label="Test1"> </p-checkbox>
+      </div>
+    </div>
+  </div>
+
+  <div class="row"></div>
+
+  <div class="ui-g-12 ui-md-4">
+    <div class="first">Gender</div>
+    <div class="ui-g" style="width:250px; margin-bottom:10px">
+      <div class="ui-g-12">
+        <p-radioButton name="rbgroup" id="M" value="M" [(ngModel)]="seletedGender" label="Male"> </p-radioButton>
+      </div>
+      <div class="ui-g-12">
+          <p-radioButton name="rbgroup" id="F" value="F" [(ngModel)]="seletedGender" label="Female"> </p-radioButton>
+      </div>
+    </div>
+  </div>
+
+  <div class="row"></div>
+
+  <div class="ui-g-12 ui-md-4">
+    <div class="first"> Select Disease</div>
+    <p-dropdown [options]="patDiease" [(ngModel)]="selectedDisease"  name="dis" filter="true" editable="true" [panelStyle]="{minWidth:'12em'}"  placeholder="Select Disease"></p-dropdown>
+  </div>
+
+  <div class="row"></div>
+
+  <div class="ui-g-12 ui-md-4">
+    <div class="first"> Select Testing</div>
+    <p-dropdown [options]="testOptions" [(ngModel)]="testOption"  name="tes" filter="true" editable="true" [panelStyle]="{minWidth:'12em'}"  placeholder="Select Disease"></p-dropdown>
+  </div>
+
+  <div class="row"></div>
+
+  <div class="ui-g-12 ui-md-4">
+    <div class="first"> MultiSelect Disease</div>
+    <p-multiSelect [options]="patDiease" [(ngModel)]="multiSelectedDisease"  name="muldis" [panelStyle]="{minWidth:'12em'}" 
+      placeholder="Multi Select Disease"></p-multiSelect>
+  </div>
+
+  <div class="row"></div>
+
+  <div class="ui-g-12 ui-md-4">
+    <h4>Choose Date</h4>
+    <p-calendar [(ngModel)]="patDt" name="dt" [showIcon]="true" [monthNavigator]="true" 
+      [yearNavigator]="true" yearRange="1930:2030" showButtonBar="true"
+      dateFormat="dd/mm/yy" showTime="true" hourFormat="12"></p-calendar>
+  </div>
+  <div class="row"></div>
+
+  <div class="ui-g-12 ui-md-4">
+      <h4>List Cars</h4>
+    <p-listbox [options]="patDiease" [(ngModel)]="selectedCar" multiple="multiple" name="listcars"></p-listbox>
+  </div>
+
+  <div class="row"></div>
+
+  <div class="ui-g-12 ui-md-4">
+    <h4>Dialog</h4>
+    <button pButton name="dialog" value="Dialog" (click)="onDialog();" type="button" label="Show"></button>
+    <p-dialog header="Welcome" [(visible)]="display" [maximizable]="true">
+        <ul>
+            <li *ngFor="let item of cars">{{item.year}}<li>
+        </ul>
+    </p-dialog>
+  </div>
+
+  <div class = "row"></div>
+
+<div class = "ui-g-12 ui-md-4">
+  <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" ></p-tree>
+</div>
+
+<div class = "row"></div>
+
+<div class="ui-g-12 ui-md-4">
+  <h4>Pick List</h4>
+    <p-pickList [source]="carsList" [target]="targetCars" name="picklist">
+      <ng-template let-car pTemplate="item">
+        {{car.value}}
+      </ng-template>
+    </p-pickList>
+</div>
+
+<div class = "row"></div>
+
+<div class="ui-g-12 ui-md-4">
+  <h4>Discharged Date </h4>
+  <p-calendar [(ngModel)]="disDate" name="disDate" showTime="true" [showIcon]="true" dateFormat="dd/mm/yy"
+   showButtonBar="true"></p-calendar>
+</div>
+
+<div class = "row"></div>
+
+<div class="ui-g-12 ui-md-4">
+  <p-fileUpload name="myfile[]" (onUpload)="onUpload($event)">
+    <ng-template pTemplate="content">
+      <ul *ngIf="uploadedFiles.length">
+        <li *ngFor="let file of uploadedFiles">
+          {{file.name}} and {{file.size}}
+        </li>
+      </ul>
+
+    </ng-template>
+  </p-fileUpload>
+</div>
+
+<div class="row"></div>
+
+<div class="ui-g-12 ui-md-4">
+  <button pButton type="button" (click)="onSubmit()" class="ui-button-info" [disabled]="!myform.form.valid">Submit</button>
+</div>
+
+<div class="row"></div>
+</form>
+
+<div class="row"></div>
+
+Table 1: 
+
+<p-table [columns]="cols" [value]="patDetails" [reorderableColumns]="true">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+       <th rowspan="2" style="width:2em"></th>
+      <th rowspan="2"  pReorderableColumn>Patient ID</th>
+      <th colspan="2"  pReorderableColumn>Details</th>
+      <th rowspan="2"  pReorderableColumn>Total Amount</th>
+    </tr>
+    <tr>
+        <th pReorderableColumn >Summary</th>
+        <th pReorderableColumn >Amount</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-pat let-rowData let-columns="columns"  let-index="rowIndex">
+    <tr [pReorderableRow]="index">
+        <td>
+            <i class="fa fa-bars" pReorderableRowHandle></i>
+        </td>
+        <td>{{pat.patID}}</td>
+      <td>{{pat.patSum}}</td>
+      <td>{{pat.patAmt}}</td>
+      <td>{{pat.patTotAmt}}</td> 
+      <!--[attr.rowspan]= "col.rowspan" -->
+    </tr>
+  </ng-template>
+  <!-- <ng-template pTemplate="footer">
+      <tr>
+          <td colspan="3">Totals</td>
+          <td>900.00</td>
+          <td>900.00</td>
+      </tr>
+  </ng-template>
+-->
+</p-table>
+
+
+<div class="row"></div>
+
+<br>
+
+Table 2: 
+
+<p-table [columns]="patCols" [value]="patDetails" [reorderableColumns]="true">
+  <ng-template pTemplate="header" let-columns>
+ 
+    <tr>
+        <th rowspan="2" style="width:2em"></th>
+        <ng-container *ngFor="let col of columns" >
+          <th *ngIf="col.field !== 'patSum' && col.field !== 'patAmt'"
+              [attr.rowspan]= "col.rowspan" [attr.colspan]= "col.colspan" pReorderableColumn>
+                  {{col.header}} 
+          </th> 
+      </ng-container>
+    </tr>
+
+    <tr>
+      <ng-container *ngFor="let col of remCols" >
+        <th *ngIf="col.data === 'yes'" [ngStyle]="{'display': col.display}" pReorderableColumn>
+                {{ col.header }}
+        </th>
+      </ng-container>
+        <!--<th *ngFor="let col of columns">
+            <div *ngIf="col.field === 'patSum'">
+                {{ col.header }}
+              </div>
+        </th>
+        <th *ngFor="let col of columns">
+            <div *ngIf="col.field === 'patAmt'">
+                {{ col.header }}
+              </div>
+        </th> -->
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns"  let-index="rowIndex">
+    <tr [pReorderableRow]="index">
+        <td>
+            <i class="fa fa-bars" pReorderableRowHandle></i>
+        </td>
+      <ng-container  *ngFor="let col of columns">
+       <td [ngStyle]="{'display': col.display}">
+            {{rowData[col.field]}}
+      </td> 
+    </ng-container>
+    </tr>
+  </ng-template>
+</p-table>
+
+
+<div class="row"></div>
+
+<br>
+
+Resizeable
+<p-table [columns]="cols" [value]="cars" [reorderableColumns]="true">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th style="width:2em"></th>
+            <th *ngFor="let col of columns" pReorderableColumn>
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+        <tr [pReorderableRow]="index">
+            <td>
+                <i class="fa fa-bars" pReorderableRowHandle></i>
+            </td>
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<br>
+<br>
+Table 3: 
+
+<p-table [columns]="patCols" [value]="patDetails" [reorderableColumns]="true" (onColReorder)="colReordered($event)">
+  <ng-template pTemplate="header" let-columns>
+ 
+      <tr>
+          <th rowspan="2" style="width:2em"></th>
+          <ng-container *ngFor="let col of columns" >
+            <th *ngIf="col.field !== 'patSum' && col.field !== 'patAmt'"
+                [attr.rowspan]= "col.rowspan" [attr.colspan]= "col.colspan" pReorderableColumn>
+                    {{col.header}} 
+            </th> 
+        </ng-container>
+      </tr>
+
+    <tr>
+      <ng-container *ngFor="let col of remCols" >
+        <th *ngIf="col.data === 'yes'" [ngStyle]="{'display': col.display}" pReorderableColumn>
+                {{ col.header }}
+        </th>
+      </ng-container>
+        <!--<th *ngFor="let col of columns">
+            <div *ngIf="col.field === 'patSum'">
+                {{ col.header }}
+              </div>
+        </th>
+        <th *ngFor="let col of columns">
+            <div *ngIf="col.field === 'patAmt'">
+                {{ col.header }}
+              </div>
+        </th> -->
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns"  let-index="rowIndex">
+    <tr [pReorderableRow]="index">
+        <td>
+            <i class="fa fa-bars" pReorderableRowHandle></i>
+        </td>
+      <ng-container  *ngFor="let col of columns">
+       <td [ngStyle]="{'display': col.display}">
+            {{rowData[col.field]}}
+      </td> 
+    </ng-container>
+    </tr>
+  </ng-template>
+</p-table>
+
+<br>
+<br>
+Sales
+<p-table [value]="sales" [reorderableColumns]="true"> 
+    <ng-template pTemplate="header">
+        <tr>
+            <th rowspan="3" pReorderableColumn>Brand</th>
+            <th colspan="4" pReorderableColumn>Sale Rate</th>
+        </tr>
+        <tr>
+            <th colspan="2" >Sales</th>
+            <th colspan="2" >Profits</th>
+        </tr>
+        <tr>
+            <th>Last Year</th>
+            <th>This Year</th>
+            <th>Last Year</th>
+            <th>This Year</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-sale let-index="rowIndex">
+        <tr>
+            <td>{{sale.brand}}</td>
+            <td>{{sale.lastYearSale}}</td>
+            <td>{{sale.thisYearSale}}</td>
+            <td>{{sale.lastYearProfit}}</td>
+            <td>{{sale.thisYearProfit}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+<br>
+<br>
+Testing : 
+
+<p-table [columns]="cols" [value]="cars" dataKey="vin"
+             [reorderableColumns]="true" (onColReorder)="colReordered($event)"  pDraggable="cars" (onDrop)="drop($event)">
+          <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col>
+                      <ng-container *ngFor="let col of columns">
+                    <col>
+                    </ng-container>
+                </colgroup>
+            </ng-template>
+            
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th rowspan="2" style="width: 2.25em"></th>
+                <ng-container *ngFor="let col of columns" >
+                  <th *ngIf="col.field !== 'color'"   pReorderableColumn  [attr.rowspan]= "col.rowspan" [attr.colspan]= "col.colspan">
+                      {{col.header}}
+                  </th> 
+              </ng-container>
+            </tr>
+            <tr>
+                <ng-container *ngFor="let col of spanCols" >
+                  <th *ngIf="col.data === 'yes'" [ngStyle]="{'display': col.display}" >
+                          {{ col.header }}
+                  </th>
+                </ng-container>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-index="rowIndex">
+            <tr [pReorderableRow]="index">
+                <td>
+                    <a href="#" [pRowToggler]="rowData">
+                        <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+                    </a>
+                </td>
+               <ng-container *ngFor="let col of columns">
+                  <td>
+                      {{rowData[col.field]}} -- {{col.field}} 
+                  </td>
+              </ng-container> 
+             
+            </tr>
+           
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+            <tr>
+                <td [attr.colspan]="columns.length + 1">
+                    <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
+                        <div class="ui-g-12 ui-md-3" style="text-align:center">
+                            <h4>Some image</h4>
+                        </div>
+                        <div class="ui-g-12 ui-md-9">
+                            <div class="ui-g">
+                                <div class="ui-g-12">
+                                    <b>Vin:</b> {{rowData.vin}}
+                                </div>
+                                <div class="ui-g-12">
+                                    <b>Color:</b> {{rowData.color}}
+                                </div>
+                                <div class="ui-g-12">
+                                    <b>Brand:</b> {{rowData.brand}}
+                                </div>
+                                <div class="ui-g-12">
+                                    <b>Year:</b> {{rowData.year}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
